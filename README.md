@@ -24,7 +24,7 @@ Laravel Username Guards is a comprehensive package for validating usernames in L
 Install the package via Composer:
 
 ```bash
-composer require alizio-dev/laravel-username-guards
+composer require aliziodev/laravel-username-guards
 ```
 
 ## Console Commands
