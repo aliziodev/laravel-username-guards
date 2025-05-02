@@ -71,9 +71,6 @@
             "aliases": {
                 "Username": "Aliziodev\\UsernameGuard\\Facades\\Username"
             }
-        },
-        "branch-alias": {
-            "dev-main": "1.x-dev"
         }
     },
     "minimum-stability": "dev",
