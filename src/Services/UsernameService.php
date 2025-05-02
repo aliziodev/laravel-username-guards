@@ -309,13 +309,24 @@ class UsernameService
     protected function validateWords(string $text): bool
     {
         try {
+            // Get normalization settings from config
+            $normalizationEnabled = $this->config['normalization']['enabled'] ?? true;
+            $checkNormalizedOnly = $this->config['normalization']['check_normalized_only'] ?? false;
+
+            // Normalize text if enabled
+            $normalizedText = $normalizationEnabled ? $this->normalizeText($text) : $text;
+
             // Forbidden words validation
             foreach ($this->categories as $category => $enabled) {
                 if (!$enabled) continue;
 
                 $words = $this->getWordsByCategory($category);
                 foreach ($words as $word) {
-                    if (stripos($text, $word) !== false) {
+                    // Check based on configuration
+                    $foundInOriginal = !$checkNormalizedOnly && stripos($text, $word) !== false;
+                    $foundInNormalized = $normalizationEnabled && stripos($normalizedText, $word) !== false;
+
+                    if ($foundInOriginal || $foundInNormalized) {
                         throw new UsernameGuardException(
                             "Username contains prohibited word from category '{$category}'",
                             'words',
@@ -481,6 +492,43 @@ class UsernameService
                 ['category' => $category, 'locale' => $locale]
             );
         }
+    }
+
+    /**
+     * Normalize text by replacing common character substitutions
+     * 
+     * Replaces common character substitutions used to bypass word filters,
+     * such as '0' to 'o', '1' to 'i', etc. This helps detect attempts to use
+     * prohibited words with character substitutions.
+     *
+     * @param string $text The text to normalize
+     * @return string The normalized text
+     */
+    protected function normalizeText(string $text): string
+    {
+        $substitutions = [
+            '0' => 'o',
+            '1' => 'i',
+            '3' => 'e',
+            '4' => 'a',
+            '5' => 's',
+            '6' => 'g',
+            '7' => 't',
+            '8' => 'b',
+            '@' => 'a',
+            '$' => 's',
+            '+' => 't',
+            '!' => 'i',
+            'z' => '2',
+            '&' => 'a',
+            '#' => 'h',
+            '%' => 'p',
+            '^' => 'c',
+            '*' => 'x',
+            '(' => 'c',
+        ];
+
+        return str_replace(array_keys($substitutions), array_values($substitutions), strtolower($text));
     }
 
     /**
