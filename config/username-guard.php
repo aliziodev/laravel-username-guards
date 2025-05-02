@@ -57,6 +57,29 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Character Normalization
+    |--------------------------------------------------------------------------
+    |
+    | Enable or disable character normalization for word filtering.
+    | When enabled, the system will normalize text by replacing common character
+    | substitutions (like '0' to 'o', '1' to 'i', etc.) before checking for
+    | prohibited words. This helps catch attempts to bypass filters using
+    | character substitution.
+    |
+    | Example: When enabled, "k0nt0l" will be normalized to "kontol" for checking.
+    |
+    | - enabled: Enable/disable the entire normalization feature
+    | - check_normalized_only: When true, only checks normalized text
+    |   When false, checks both original and normalized text
+    |
+    */
+    'normalization' => [
+        'enabled' => env('WORD_FILTER_NORMALIZATION_ENABLED', true),
+        'check_normalized_only' => env('WORD_FILTER_CHECK_NORMALIZED_ONLY', false),
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Word Categories
     |--------------------------------------------------------------------------
     |
