@@ -1,0 +1,91 @@
+{
+    "name": "aliziodev/laravel-username-guards",
+    "description": "A comprehensive username filtering package for Laravel that helps filter profanity, adult content, illegal activities, gambling, spam, and religion abuse words",
+    "type": "library",
+    "keywords": [
+        "laravel",
+        "username",
+        "username-filter",
+        "username-guard",
+        "username-validator",
+        "username-checker",
+        "username-filtering",
+        "username-validation",
+        "filters",
+        "profanity",
+        "adult-content",
+        "spam",
+        "word-guard",
+        "content-filter",
+        "text-validator",
+        "bad-words"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alizio",
+            "email": "aliziodev@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2",
+        "illuminate/support": "^10.0|^11.0|^12.0",
+        "illuminate/console": "^10.0|^11.0|^12.0",
+        "illuminate/validation": "^10.0|^11.0|^12.0",
+        "illuminate/translation": "^10.0|^11.0|^12.0",
+        "illuminate/contracts": "^10.0|^11.0|^12.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^2.34",
+        "phpstan/phpstan": "^1.10",
+        "laravel/pint": "^1.13"
+    },
+    "autoload": {
+        "psr-4": {
+            "Aliziodev\\UsernameGuard\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse",
+        "check": [
+            "@format",
+            "@analyse",
+            "@test"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Aliziodev\\UsernameGuard\\UsernameGuardServiceProvider"
+            ],
+            "aliases": {
+                "Username": "Aliziodev\\UsernameGuard\\Facades\\Username"
+            }
+        },
+        "branch-alias": {
+            "dev-main": "1.x-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "support": {
+        "issues": "https://github.com/aliziodev/laravel-username-guards/issues",
+        "source": "https://github.com/aliziodev/laravel-username-guards"
+    }
+}
